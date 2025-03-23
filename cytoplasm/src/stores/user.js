@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 
-const userAdminStore = defineStore('admin', () => {
+const userStore = defineStore('user', () => {
     const data = reactive({
         name: "",
         token: "",
@@ -22,4 +22,4 @@ const userAdminStore = defineStore('admin', () => {
     persist: true //持久化存储到localStorage中
 })
 
-export { userAdminStore }
+export { userStore }

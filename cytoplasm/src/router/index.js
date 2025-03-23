@@ -4,7 +4,11 @@ import {createRouter, createWebHistory} from 'vue-router'
 const routes = [
     {
         path:"/login",
-        component: ()=> import("@/views/admin/login.vue")
+        component: ()=> import("@/views/login.vue")
+    },
+    {
+        path:"/dashboard",
+        component: ()=> import("@/views/dashboard.vue")
     }
 ]
 
