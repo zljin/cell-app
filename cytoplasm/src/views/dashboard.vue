@@ -3,6 +3,7 @@ import { reactive, ref, provide } from 'vue';
 import HeaderBar from '@/components/HeaderBar.vue';
 import Nav from '@/components/Nav.vue';
 import MainContent from '@/components/MainContent.vue';
+import Footer from '@/components/Footer.vue';
 
 const userInfo = reactive({
     name: "admin",
@@ -38,6 +39,11 @@ provide('provideSelectedIndex', selectedIndex);
                 <MainContent/>
             </div>
         </div>
+        <Footer>
+            <template #info="{author, url}">
+                <p>Author: {{author}} URL: <a :href="url">{{url}}</a></p>
+            </template>
+        </Footer>
     </div>
 </template>
 
