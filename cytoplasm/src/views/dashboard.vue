@@ -1,58 +1,41 @@
 <script setup>
 import { reactive, ref, provide } from 'vue';
 import HeaderBar from '@/components/HeaderBar.vue';
-import Content1 from '@/components/Content1.vue';
-import Content2 from '@/components/Content2.vue';
+import Nav from '@/components/Nav.vue';
+import MainContent from '@/components/MainContent.vue';
 
 const userInfo = reactive({
     name: "admin",
     role: "admin"
 });
 
+provide('provideUserInfo', userInfo);
+
 const selectedIndex = reactive({
     index: "1",
     indexPath: ["1"]
 });
 
-provide('provideUserInfo', userInfo);
 
-const defaultOpeneds = ref(["2", "3"]);
+const emitsSelectIndex = (data)=>{
+    console.log("Data:"+data.index+"===>"+data.indexPath);
+    selectedIndex.index = data.index;
+    selectedIndex.indexPath = data.indexPath;
+}
 
-const selected = (index, indexPath) => {
-    console.log(index + "===>" + indexPath);
-    selectedIndex.index = index;
-    selectedIndex.indexPath = indexPath;
-};
+provide('provideSelectedIndex', selectedIndex);
+
+
 </script>
 
 <template>
     <div class="dashboard-container">
         <HeaderBar class="header-bar"></HeaderBar>
         <div class="content">
-            <div class="nav">
-                <el-menu :default-openeds="defaultOpeneds" @select="selected" background-color="#545c64"
-                    text-color="#fff" active-text-color="#ffd04b" style="width: 200px;">
-                    <el-menu-item index="1">我的工作台</el-menu-item>
-                    <el-sub-menu index="2">
-                        <template #title> 用户管理 </template>
-                        <el-menu-item index="2-1">用户列表</el-menu-item>
-                        <el-menu-item index="2-2">用户添加</el-menu-item>
-                        <el-menu-item index="2-3">选项3</el-menu-item>
-                    </el-sub-menu>
-                    <el-menu-item index="3">消息中心</el-menu-item>
-                    <el-menu-item index="4">订单管理</el-menu-item>
-                </el-menu>
-            </div>
+            <Nav @getSelectedIndex="emitsSelectIndex"></Nav>
+            
             <div class="main-content">
-                <template v-if="selectedIndex.index === '1'">
-                    <Content1 />
-                </template>
-                <template v-else-if="selectedIndex.index === '3'">
-                    <Content2 />
-                </template>
-                <template v-else>
-                    <p>欢迎来到仪表盘！{{ selectedIndex.indexPath }}</p>
-                </template>
+                <MainContent/>
             </div>
         </div>
     </div>
